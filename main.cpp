@@ -24,7 +24,7 @@ void palavra(string& s){
 	}
 }
 
-void ler_arquivos( Vetor& vt, Vetor& v1, Vetor& v2, Vetor& v3) {
+void ler_arquivos( Vetor& v1, Vetor& v2, Vetor& v3) {
 	ifstream in1,in2,in3;
 	in1.open("doc1.txt");
 	in2.open("doc2.txt");
@@ -38,8 +38,8 @@ void ler_arquivos( Vetor& vt, Vetor& v1, Vetor& v2, Vetor& v3) {
 	while (in1 >> aux){
 		minusculo(aux);
 		palavra(aux);
-		v1.inserir(aux,"doc1");
-		vt.inserir(aux,"doc1");
+		v1.inserir(aux);
+		v1.documento("doc1");
 	}	
 	in1.close();
 	
@@ -50,8 +50,8 @@ void ler_arquivos( Vetor& vt, Vetor& v1, Vetor& v2, Vetor& v3) {
 	while (in2 >> aux){
 		minusculo(aux);
 		palavra(aux);
-		v2.inserir(aux,"doc2");
-		vt.inserir(aux,"doc2");
+		v2.inserir(aux);
+		v2.documento("doc2");
 	}	
 	in2.close();
 	
@@ -62,18 +62,17 @@ void ler_arquivos( Vetor& vt, Vetor& v1, Vetor& v2, Vetor& v3) {
 	while (in3 >> aux){
 		minusculo(aux);
 		palavra(aux);
-		v3.inserir(aux,"doc3");
-		vt.inserir(aux,"doc3");
+		v3.inserir(aux);
+		v3.documento("doc3");
 	}	
 	in3.close();
 }
 
 int main(){
 	system("cls");
-	int tf1,tf2,tf3;
-	Vetor v1,v2,v3,vt;
-	ler_arquivos(vt,v1,v2,v3);
-	vt.documento("casa");
+	Vetor v1,v2,v3;
+	ler_arquivos(v1,v2,v3);
+	cout<<v1.ocorrencias("casa");
 	
 }
 

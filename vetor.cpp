@@ -8,9 +8,7 @@ using std::string;
 
 struct No {
   	string palavra;
-  	string *documento_[n_doc];
   	int ocorrencias;
-  	int n_documentos;
   	No* esq;
   	No* dir;
 };
@@ -22,8 +20,8 @@ Vetor::Vetor(){
 	fim_->esq =fim_;
 }
 
-Vetor::Vetor(string s,string doc) : Vetor() {
-	inserir(s,doc);
+Vetor::Vetor(string s) : Vetor() {
+	inserir(s);
 }
 
 bool Vetor::vazio() const {
@@ -66,20 +64,10 @@ int Vetor::ocorrencias(string s) const {
 
 
 void Vetor::documento(string s) {
-	if(this->pertence(s)){
-		No* aux = fim_->dir;
-		string a=aux->palavra;
-		while(a!=s){
-			aux = aux->dir;
-			a = aux->palavra;
-		}
-		for(int i=0;i<n_doc;i++){
-			cout<<aux->documento_[i]<<" ";
-		}
-	}
+	documento_=s;
 }
 
-void Vetor::inserir(string s,string doc) {
+void Vetor::inserir(string s) {
 	if(this->pertence(s) ){
 		No* aux = fim_->dir;
 		string a = aux->palavra;
@@ -88,12 +76,6 @@ void Vetor::inserir(string s,string doc) {
 			a = aux->palavra;
 		} 	
 		aux->ocorrencias++;
-		int d= atoi(doc[3]);
-		if(doc != aux->documento_ [d-1]){
-			aux->documento_[d-1] = doc;
-			aux->n_documentos++;
-		}
-		
 	}
 	else{	
 		No* z = new No;
@@ -104,9 +86,6 @@ void Vetor::inserir(string s,string doc) {
 		ultimo->dir = z;
 		fim_->esq = z;
 		z->ocorrencias = 1;
-		int d= atoi("3");
-		z->documento_[d-1] = doc;
-		z->n_documentos++;
 		this->cardinalidade_++;
 	}
 }

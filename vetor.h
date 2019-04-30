@@ -13,7 +13,7 @@ class Vetor {
   Vetor();
 
   // Cria um vetor unitário contendo s;
-  Vetor(string s, string doc);
+  Vetor(string s);
 
   // Testa se o vetor é vazio.
   bool vazio() const;
@@ -35,7 +35,7 @@ class Vetor {
   void documento(string s) ;
 
   // Insere s no vetor, se lá ele não está.
-  void inserir(string s, string doc);
+  void inserir(string s);
   /*
   Vetor uniao(const Vetor& x);
 
