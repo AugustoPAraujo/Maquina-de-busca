@@ -19,6 +19,63 @@ void minusculo (string& s){
   }
 }
 
+//Cria um arquivo txt com a consulta
+int criar_consulta(){
+  ofstream consulta;
+  consulta.open("consulta.txt");
+  string palavra;
+  cout<<"Digite o texto que deseja buscar (digite 'pause' para terminar): ";
+
+  while(palavra != "pause"){
+    cin>>palavra;
+    if(palavra == "pause"){
+      break;
+    }
+    if(palavra == "STOP"){
+      return 0;
+    }
+    consulta<<palavra<<" ";
+  }
+  consulta.close();
+  return 1;
+}
+
+/*
+//Cria set<string> com a intersecção dos documentos que contem a c_consulta
+set<string> documentos(Dicionario indiceinvertido){
+  ifstream p;
+  p.open("consulta.txt");
+  int a=0;
+  set<string> docs;
+  while(p>>palavra){
+    cout<<palavra<<" ";
+    if(a==0){
+      docs = indiceinvertido.consulta(palavra);
+      a++;
+      if(docs.size() > 0){
+        for(set<string>::iterator it = docs.begin();it != docs.end();it++){
+          cout << *it << endl;
+        }
+        cout<<endl;
+      }
+      continue;
+    }
+    set<string> aux = indiceinvertido.consulta(palavra);
+    for(set<string>::iterator it = docs.begin();it != docs.end();it++){
+      if(aux.count(*it)==0){
+        docs.erase(*it);
+      }
+    }
+    if(docs.size() > 0){
+      for(set<string>::iterator it = docs.begin();it != docs.end();it++){
+        cout << *it << endl;
+      }
+      cout<<endl;
+    }
+  }
+}
+*/
+
 //Define quantas vezes a palavra esta nos documentos "TF"
 vector<int> tf(set<string> doc, string palavra){
   vector<int> r;
@@ -43,6 +100,9 @@ vector<int> tf(set<string> doc, string palavra){
 //	map<string,       map< set<string>, int >     -> mapa  //
 //       |                      |                          //
 //     palavra             doc(chave)                      //
+// map< string, map< string , int> > indinv
+// indinv[string][string]=int;
+//
 
 /*
 Dicionario::Dicionario(string doc, string palavra){

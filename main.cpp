@@ -15,22 +15,40 @@ int main(){
 
   while(loop!=0){
     double n=0,nt=0;
-    cout<<"Digite a palavra que deseja buscar: ";
-    cin>>palavra;
-    if(palavra == "fecharprog"){
-      break;
+    int c_consulta;
+    c_consulta = criar_consulta();
+    if(c_consulta==0)return 0;
+
+    ifstream p;
+    p.open("consulta.txt");
+    int a=0;
+    set<string> docs;
+    while(p>>palavra){
+      minusculo(palavra);
+      if(a==0){
+        docs = indiceinvertido.consulta(palavra);
+        a++;
+        continue;
+      }
+      set<string> aux = indiceinvertido.consulta(palavra);
+      for(set<string>::iterator it = docs.begin();it != docs.end();it++){
+        if(aux.count(*it)==0){
+          docs.erase(*it);
+        }
+      }
     }
-    set<string> docs = indiceinvertido.consulta(palavra);
+    cout<<"Os arquivos que contem a consulta sao: "<<endl;
     if(docs.size() > 0){
       for(set<string>::iterator it = docs.begin();it != docs.end();it++){
-        nt++;
         cout << *it << endl;
       }
     }
     else{
-      cout<<"Nao existe essa palavra no banco de dados"<<endl;
+      cout<<"Nao existe esse texto no banco de dados"<<endl;
       continue;
     }
+
+    /*
 
     //TF
     vector<int> tf_ = tf(docs,palavra);
@@ -42,9 +60,9 @@ int main(){
     //IDF;
     double idf_=0;
     n = indiceinvertido.numdoc();
-    cout<<n<<"  "<<nt<<endl;
     idf_ = log(n/nt);
     cout<<"idf= "<<idf_<<endl;
+
     // w
     vector<double> w;
     for (int i=0;i<tf_.size();i++){
@@ -52,5 +70,12 @@ int main(){
       w.push_back(aux);
       cout<<"w["<<i<<"] = "<<w[i]<<endl;
     }
+
+    //SIM
+    vector<double> sim_;
+    double q = idf_;
+    for (int i=0;i < w.size();i++){
+    }
+    */
   }
 }
