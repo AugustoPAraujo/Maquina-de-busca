@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
-#include "funcoes.h"
+#include "indice.h"
+#include "ranking.h"
 #include <string>
 #include <math.h>
 #include <windows.h>
@@ -9,16 +10,18 @@ using namespace std;
 
 int main(){
   system("cls");
+  //Criar indice invertido
   Dicionario indiceinvertido;
   string palavra;
   int loop=1;
 
   while(loop!=0){
-    double n=0,nt=0;
+    //Criar documento consulta
     int c_consulta;
     c_consulta = criar_consulta();
     if(c_consulta==0)return 0;
 
+    //Retornar vetor set<string> com a intersecção dos documentos
     ifstream p;
     p.open("consulta.txt");
     int a=0;
@@ -47,6 +50,14 @@ int main(){
       cout<<"Nao existe esse texto no banco de dados"<<endl;
       continue;
     }
+
+    //Ranking
+
+    //Calcular IDF
+    map<string,double> idf_ = indiceinvertido.idf();
+    Ranking rank(docs);
+    //Calcular W de todos os documentos e armazenar em um map<string,w>
+
 
     /*
 
