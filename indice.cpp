@@ -41,93 +41,30 @@ int criar_consulta(){
   return 1;
 }
 
-/*
+
 //Cria set<string> com a intersecção dos documentos que contem a c_consulta
-set<string> documentos(Dicionario indiceinvertido){
+set<string> Dicionario::documentos(){
   ifstream p;
   p.open("consulta.txt");
   int a=0;
   set<string> docs;
+  string palavra;
   while(p>>palavra){
-    cout<<palavra<<" ";
+    minusculo(palavra);
     if(a==0){
-      docs = indiceinvertido.consulta(palavra);
+      docs = consulta(palavra);
       a++;
-      if(docs.size() > 0){
-        for(set<string>::iterator it = docs.begin();it != docs.end();it++){
-          cout << *it << endl;
-        }
-        cout<<endl;
-      }
       continue;
     }
-    set<string> aux = indiceinvertido.consulta(palavra);
+    set<string> aux = consulta(palavra);
     for(set<string>::iterator it = docs.begin();it != docs.end();it++){
       if(aux.count(*it)==0){
         docs.erase(*it);
       }
     }
-    if(docs.size() > 0){
-      for(set<string>::iterator it = docs.begin();it != docs.end();it++){
-        cout << *it << endl;
-      }
-      cout<<endl;
-    }
   }
+  return docs;
 }
-*/
-
-//Define quantas vezes a palavra esta nos documentos "TF"
-vector<int> tf(set<string> doc, string palavra){
-  vector<int> r;
-  for(set<string>::iterator i = doc.begin(); i != doc.end(); i++){
-    ifstream texto;
-    texto.open(*i);
-    string p;
-    int aux=0;
-    while (texto>>p){
-      minusculo(p);
-      if (p==palavra){
-        aux++;
-      }
-    }
-    r.push_back(aux);
-  }
-  return r;
-}
-
-//   mp   palavra     id         st      tf                //
-//   |     |            |         |      |                 //
-//	map<string,       map< set<string>, int >     -> mapa  //
-//       |                      |                          //
-//     palavra             doc(chave)                      //
-// map< string, map< string , int> > indinv
-// indinv[string][string]=int;
-//
-
-/*
-Dicionario::Dicionario(string doc, string palavra){
-	if(mp.count(palavra) == 0){ //se não houver a palavra no mapa
-		st.insert(doc);
-		set<string>::iterator i=st.begin();
-		id[st[*i]] = 1;
-		mp[palavra] = id;
-	}else{
-		if(!st.count(doc)){
-			st.insert(doc);
-			set<string>::iterator i=st.begin();
-			id[st[*i]] = 1;
-		}else{
-			for(set<string>::iterator i=st.begin(); i != st.end(); i++){
-				if(*i == doc){
-					id[st[*i]] += 1;
-				}
-			}
-		}
-		mp[palavra] = id;
-	}
-}
-*/
 
 Dicionario::Dicionario(){
   ndoc_ = 0;
@@ -145,6 +82,18 @@ Dicionario::Dicionario(){
     }
   }
 }
+
+Dicionario::Dicionario(string s){
+  ndoc_ = 1;
+  ifstream texto;
+  texto.open("consulta.txt");
+  string palavra;
+  while (texto>>palavra){
+    minusculo(palavra);
+    this->iv[palavra].insert("consulta.txt");
+  }
+}
+
 
 set<string> Dicionario::consulta(string palavra) {
 	map<string, set<string> >::iterator it;

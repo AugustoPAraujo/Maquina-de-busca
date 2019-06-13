@@ -20,6 +20,8 @@ int criar_consulta();
 class Dicionario{
   public:
 		Dicionario();
+    Dicionario(string s);
+    set<string> documentos();
     set<string> consulta(string palavra);
     double numdoc();
     map<string,double> idf();
