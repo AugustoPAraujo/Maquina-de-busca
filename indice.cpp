@@ -8,7 +8,6 @@
 using std::string;
 using namespace std;
 
-// Transforma as palavras em minusculo e retira os caracteres especiais
 void minusculo (string& s){
   for(int i=0; i<s.size();i++){
     if(s[i]>='A' && s[i]<='Z'){
@@ -20,50 +19,23 @@ void minusculo (string& s){
   }
 }
 
-//Cria um arquivo txt com a consulta
 int criar_consulta(){
   ofstream consulta;
   consulta.open("consulta.txt");
   string palavra;
-  cout<<"Digite o texto que deseja buscar (digite 'pause' para terminar): ";
-
+  cout<<"Digite o texto que deseja buscar (digite 'pause' para terminar ou 'STOP' para fechar o programa): ";
   while(palavra != "pause"){
     cin>>palavra;
-    if(palavra == "pause"){
+    if(palavra == "pause" || palavra =="PAUSE"){
       break;
     }
-    if(palavra == "STOP"){
+    if(palavra == "STOP" || palavra == "stop"){
       return 0;
     }
     consulta<<palavra<<" ";
   }
   consulta.close();
   return 1;
-}
-
-
-//Cria set<string> com a intersecção dos documentos que contem a c_consulta
-set<string> Dicionario::documentos(){
-  ifstream p;
-  p.open("consulta.txt");
-  int a=0;
-  set<string> docs;
-  string palavra;
-  while(p>>palavra){
-    minusculo(palavra);
-    if(a==0){
-      docs = consulta(palavra);
-      a++;
-      continue;
-    }
-    set<string> aux = consulta(palavra);
-    for(set<string>::iterator it = docs.begin();it != docs.end();it++){
-      if(aux.count(*it)==0){
-        docs.erase(*it);
-      }
-    }
-  }
-  return docs;
 }
 
 Dicionario::Dicionario(){
@@ -92,8 +64,31 @@ Dicionario::Dicionario(string s){
     minusculo(palavra);
     this->iv[palavra].insert("consulta.txt");
   }
+  texto.close();
 }
 
+set<string> Dicionario::documentos(){
+  ifstream p;
+  p.open("consulta.txt");
+  int a=0;
+  set<string> docs;
+  string palavra;
+  while(p>>palavra){
+    minusculo(palavra);
+    if(a==0){
+      docs = consulta(palavra);
+      a++;
+      continue;
+    }
+    set<string> aux = consulta(palavra);
+    for(set<string>::iterator it = docs.begin();it != docs.end();it++){
+      if(aux.count(*it)==0){
+        docs.erase(*it);
+      }
+    }
+  }
+  return docs;
+}
 
 set<string> Dicionario::consulta(string palavra) {
 	map<string, set<string> >::iterator it;
@@ -106,6 +101,7 @@ set<string> Dicionario::consulta(string palavra) {
 		return bla;
 	}
 }
+
 double Dicionario::numdoc(){
   return ndoc_;
 }

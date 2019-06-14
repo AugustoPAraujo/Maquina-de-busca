@@ -13,17 +13,19 @@ void minusculo (string& s);
 //Cria um arquivo txt com a consulta
 int criar_consulta();
 
-
-//Cria set<string> com a intersecção dos documentos que contem a c_consulta
-//set<string> documentos(Dicionario indiceinvertido);
-
 class Dicionario{
   public:
+    //Construtor indice invertido
 		Dicionario();
+    //COnstrutor consulta
     Dicionario(string s);
+
     set<string> documentos();
+    //Retorna os documentos em que tem a palavra
     set<string> consulta(string palavra);
+    //Retorna quantidade de documentos do indice
     double numdoc();
+    //Retorna IDF
     map<string,double> idf();
 	private:
     map<string,set<string>> iv;
