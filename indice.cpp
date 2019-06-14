@@ -23,13 +23,13 @@ int criar_consulta(){
   ofstream consulta;
   consulta.open("consulta.txt");
   string palavra;
-  cout<<"Digite o texto que deseja buscar (digite 'pause' para terminar ou 'STOP' para fechar o programa): ";
+  cout<<"Digite o texto que deseja buscar (digite 'pause' para terminar ou '0' para fechar o programa): ";
   while(palavra != "pause"){
     cin>>palavra;
     if(palavra == "pause" || palavra =="PAUSE"){
       break;
     }
-    if(palavra == "STOP" || palavra == "stop"){
+    if(palavra == "STOP"){
       return 0;
     }
     consulta<<palavra<<" ";
